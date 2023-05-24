@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('dish_categories', function (Blueprint $table) {
             $table->id();
             $table->string("name");
+            $table->string("image");
             $table->timestamps();
         });
     }

@@ -26,22 +26,23 @@
   <link href="{{asset('vendor/quill/quill.snow.css')}}" rel="stylesheet">
   <link href="{{asset('vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{asset('vendor/remixicon/remixicon.css')}}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   {{-- datatable --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" >
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
   {{-- toaster css --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
 
   <!-- Template Main CSS File -->
   <link href="{{asset('css/style.css')}}" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.3.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <style>
+    .nav-item.active{
+      color: white;
+      background-color: red;
+    }
+  </style>
+  @yield('styles')
 </head>
 
 <body>
@@ -50,19 +51,12 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="/" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">NiceAdmin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
-
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -76,12 +70,7 @@
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
           </a><!-- End Profile Iamge Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-0">
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -89,7 +78,6 @@
                                         <i class="bi bi-box-arrow-right"></i>
                                         {{ __('Logout') }}
               </a>
-
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                   @csrf
               </form>
@@ -109,7 +97,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{{route('admin.index')}}">
+        <a class="nav-link {{ Route::is('admin.index')  ? 'active' : '' }}" href="{{route('admin.index')}}">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -118,30 +106,60 @@
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.dishcategory.index')}}">
-          <i class="bi bi-person"></i>
+        <a class="nav-link collapsed {{ Route::is('admin.blog.index') || Route::is('admin.blog.form') ? 'active' : '' }} " href="{{ route('admin.blog.index') }}">
+          <i class="fa-solid fa-blog"></i>
+          <span>Blogs</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed {{ Route::is('admin.gallery.index') && request()->query('mode') === 'Photo' ? 'active' : '' }}" href="{{ route('admin.gallery.index',['mode'=>'Photo']) }}">
+          <i class="fa-solid fa-image"></i>
+          <span>Photo Gallery</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed {{ Route::is('admin.gallery.index') && request()->query('mode') === 'Video' ? 'active' : '' }}" href="{{ route('admin.gallery.index',['mode'=>'Video']) }}">
+          <i class="fa-solid fa-video"></i>
+          <span>Video Gallery</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed {{ request()->is('admin/dishcategory') || request()->is('admin/dishcategory/add') ? 'active' : '' }}" href="{{route('admin.dishcategory.index')}}">
+          <i class="fa-solid fa-boxes-stacked"></i>
           <span>Dish Category</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.dish.index')}}">
-          <i class="bi bi-person"></i>
+        <a class="nav-link collapsed {{ request()->is('admin/dish') || request()->is('admin/dish/add') ? 'active' : '' }}" href="{{route('admin.dish.index')}}">
+          <i class="fa-solid fa-bowl-food"></i>
           <span>Dish</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.order.index')}}">
-          <i class="bi bi-person"></i>
+        <a class="nav-link collapsed {{ request()->is('admin/order') ? 'active' : '' }}" href="{{route('admin.order.index')}}">
+          <i class="fa-solid fa-cart-shopping"></i>
           <span>Orders ({{$order_remaining}})</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.contact.index')}}">
-          <i class="bi bi-person"></i>
+        <a class="nav-link collapsed {{ request()->is('admin/contact') ? 'active' : '' }}" href="{{route('admin.contact.index')}}">
+          <i class="fa-solid fa-address-book"></i>
           <span>Contacts ({{$unseen_contact}})</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed {{ Route::is('admin.others.tindex') || Route::is('admin.others.tform')? 'active' : '' }}" href="{{ route('admin.others.tindex') }}">
+          <i class="fa-solid fa-comment"></i>
+          <span>Testimonials </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed {{ Route::is('admin.settings.web') ? 'active' : '' }}" href="{{ route('admin.settings.web') }}">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings </span>
         </a>
       </li>
       
@@ -156,18 +174,18 @@
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
 
     @yield('content')
-
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
   </main><!-- End #main -->
-
   <!-- Vendor JS Files -->
   <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  
   <script src="{{asset('vendor/apexcharts/apexcharts.min.js')}}"></script>
   <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('vendor/chart.js/chart.min.js')}}"></script>
@@ -187,7 +205,7 @@
 
 
   <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
-
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     function generateSlug(){
       title = $("#title").val();
@@ -230,6 +248,7 @@
 </script>
 
   @yield('script')
+  @yield('scripts')
 </body>
 
 </html>

@@ -721,14 +721,24 @@ h6 {
 .sidebar-nav .nav-link.collapsed i {
   color: #899bbd;
 }
+.sidebar-nav .nav-link.active {
+  color: #fff;
+  border-radius: 5px;
+  background: #4154f1;
+}
+
+.sidebar-nav .nav-link.active i {
+  color: #fff;
+}
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
-  background: #f6f9ff;
+  color: #fff;
+  border-radius: 5px;
+  background: #4154f1;
 }
 
 .sidebar-nav .nav-link:hover i {
-  color: #4154f1;
+  color: #fff;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {

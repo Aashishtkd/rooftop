@@ -4,20 +4,14 @@ use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DishCategoryController;
 use App\Http\Controllers\DishController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\OtherController;
+use App\Http\Controllers\CkeditorController;
 use App\Http\Controllers\FrontPageController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 
 Auth::routes();
@@ -46,8 +40,10 @@ Route::prefix('')->group(function(){
     });
 });
 
-// Admin Routes
+// to upload photo on ckeditor
+Route::post('/ckeditor/upload', [CkeditorController::class, 'upload'])->name('ckeditor.upload');
 
+// Admin Routes
 Route::prefix('admin')->group(function(){
     Route::name('admin.')->group(function(){
 
@@ -60,6 +56,44 @@ Route::prefix('admin')->group(function(){
             });
         });
 
+        // Blogs Routes
+        Route::controller(BlogController::class)->group(function () {  
+            Route::name('blog.')->group(function () {
+                Route::get('blogIndex', 'index')->name('index');
+                Route::get('blogForm', 'form')->name('form');
+                Route::get('blog/loadtable', 'loadtable')->name('loadtable');
+                Route::post('blog/destroy', 'destroy')->name('destroy');
+                Route::post('blog/update', 'update')->name('update');
+            });   
+        });
+        // gallery 
+        Route::controller(GalleryController::class)->group(function () {  
+            Route::name('gallery.')->group(function () {
+                Route::get('galleryIndex', 'index')->name('index');
+                Route::get('gallery/loadtable', 'loadtable')->name('loadtable');
+                Route::post('gallery/destroy', 'destroy')->name('destroy');
+                Route::post('gallery/update', 'update')->name('update');
+            });   
+        });
+        // testimonials
+
+        Route::controller(OtherController::class)->group(function () {  
+            Route::name('others.')->group(function () {
+                Route::get('testiIndex', 'tindex')->name('tindex');
+                Route::get('testiForm', 'tform')->name('tform');
+                Route::get('testi/tloadtable', 'tloadtable')->name('tloadtable');
+                Route::post('testi/destroy', 'tdestroy')->name('tdestroy');
+                Route::post('testi/update', 'tupdate')->name('tupdate');
+                
+            });   
+        });
+        // setting
+        Route::controller(SettingController::class)->group(function () {  
+            Route::name('settings.')->group(function () {
+                Route::get('websetting', 'websetting')->name('web');
+                Route::post('settings/update', 'update')->name('update');
+            });   
+        });
         // Dish Category Routes
         Route::prefix('dishcategory')->group(function () {
             Route::controller(DishCategoryController::class)->group(function () {
@@ -67,9 +101,8 @@ Route::prefix('admin')->group(function(){
                     Route::get('/', 'index')->name('index');
                     Route::get('/add', 'add')->name('add');
                     Route::post('/create', 'create')->name('create');
-                    Route::get('/edit/{id}', 'edit')->name('edit');
                     Route::post('/update', 'update')->name('update');
-                    Route::get('/delete/{id}', 'delete')->name('delete');
+                    Route::post('/delete', 'delete')->name('delete');
                 });
             });
         });
@@ -81,9 +114,8 @@ Route::prefix('admin')->group(function(){
                     Route::get('/', 'index')->name('index');
                     Route::get('/add', 'add')->name('add');
                     Route::post('/create', 'create')->name('create');
-                    Route::get('/edit/{id}', 'edit')->name('edit');
                     Route::post('/update', 'update')->name('update');
-                    Route::get('/delete/{id}', 'delete')->name('delete');
+                    Route::post('/delete', 'delete')->name('delete');
                 });
             });
         });

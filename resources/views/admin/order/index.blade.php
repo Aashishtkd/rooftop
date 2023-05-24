@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card">
-    <div class="card-body">
+    <div class="card-body  table-responsive">
       <h5 class="card-title">All Orders</h5>
 
       <!-- Table with hoverable rows -->
@@ -26,8 +26,8 @@
                 <th scope="row">{{$order->phone}}</th>
                 <th scope="row">{{$order->created_at}}</th>
                 <th scope="row">@if($order->completed) Yes @else No @endif</th>
-                <td><a href="{{route('admin.order.single', $order->id)}}">View</a></td>
-                <td><a href="{{route('admin.order.delete', $order->id)}}">Delete</a></td>
+                <td><a href="{{route('admin.order.single', $order->id)}}" class="btn btn-sm  btn-warning">View</a></td>
+                <td><a href="{{route('admin.order.delete', $order->id)}}" class="btn btn-sm  btn-danger">Delete</a></td>
             </tr>
             @endforeach
         </tbody>

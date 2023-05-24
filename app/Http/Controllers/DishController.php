@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dish;
 use App\Models\DishCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File; 
 
 class DishController extends Controller
 {
@@ -15,72 +16,123 @@ class DishController extends Controller
 
     public function index(){
         $dishes = Dish::all();
-
-        return view('admin.dish.index', ["dishes"=>$dishes]);
+        return view('admin.dish.index', compact('dishes','dishes'));
     }
 
-    public function add(){
+    public function add(Request $req){
         $categories = DishCategory::all();
-
-        return view('admin.dish.add', ["categories"=>$categories]);
+        if($req->mode == 'update'){
+            $dish = Dish::find($req->id);
+            $data = [
+                "title" => "Update Dish",
+            ];
+            return view('admin.dish.add',compact('data','dish','categories'));
+        }elseif($req->mode == 'add'){
+            $dish =[];
+            $data = [
+                "title" => "Add New Dish",
+            ];
+            return view('admin.dish.add',compact('data','dish','categories'));
+        }else{
+            return view('admin.dish.index');
+        }
     }
 
     public function create(Request $request){
-        $request->validate([
-            "name"=>"required",
-            "price"=>"required|numeric",
-            "image"=>"required|image"
-        ]);
-
-        if($request->hasFile('image')){
-
+        if($request->id){
             $request->validate([
-                'image' => 'image'
+                "name"=>"required",
+                "price"=>"required|numeric",
+                'image'=>'mimes:jpg,png,jpg|max:5048',
+                "category"=>"required",
+                "feature"=>"required"
             ]);
-
-            // Issue due to storage link, have to change it to storage instead of public
-            $image_path = $request->file('image')->store('public');
-            $image_path = "storage/".explode('/', $image_path)[1];
-
-
-            // This line of code is for production, issue in transfering to public/storage folder
-
-            $img_name = explode('/', $image_path)[1];
-            rename('../storage/app/public/'.$img_name, '../public/storage/'.$img_name);
-
+        }else{
+            $request->validate([
+                "name"=>"required",
+                "price"=>"required|numeric",
+                'image'=>'required|mimes:jpg,png,jpg|max:5048',
+                "category"=>"required",
+                "feature"=>"required"
+            ]);
         }
 
+        if($request->file('image')){
+            if($request->id){
+                $grab_data = Dish::find($request->id);//grab data'
+                    $old_img = $grab_data->image;
+                    if(File::exists(public_path('images/'.$old_img))){
+                        File::delete(public_path('images/'.$old_img));
+                    }else{
+                        return Response()->json([
+                            'status' => 400,
+                            'message' => 'File not exist.',
+                        ]);
+                    }
+            }
+            $test=$request->file('image')->guessExtension();//get extention
+            $type=$request->file('image')->getMimeType();//get type
+            $newImageName = time().'.'.$request->image->extension();
+            $result=  $request->image->move(public_path('images'),$newImageName);
 
-
-        Dish::create([
-            "name"=>$request->get("name"),
-            "price"=>$request->get("price"),
-            "dish_category_id"=>$request->get("category"),
-            "image"=>$image_path,
-        ]);
-
-        return redirect()->route('admin.dish.index');
+        }else{
+            $old_data = Dish::find($request->id);
+            $newImageName = $old_data->image;
+        }
+        if($request->id){
+            Dish::where('id',$request->id)->update([
+                "name"=>$request->get("name"),
+                "price"=>$request->get("price"),
+                "feature"=>$request->get("feature"),
+                "dish_category_id"=>$request->get("category"),
+                'image' => $newImageName,
+            ]);
+            return Response()->json([
+                'status' => 200,
+                'message' => 'Dish Updated Successfully.',
+            ]);
+        }else{
+            Dish::create([
+                "name"=>$request->get("name"),
+                "price"=>$request->get("price"),
+                "feature"=>$request->get("feature"),
+                "dish_category_id"=>$request->get("category"),
+                'image' => $newImageName,
+            ]);
+            return Response()->json([
+                'status' => 200,
+                'message' => 'Dish Added Successfully.',
+            ]);
+        }
     }
 
-    public function delete($id){
-        $dish = Dish::Find($id);
+    public function delete(Request $req){
+        if($req->ajax()){
+            // delete file if exist
+            $grab_data = Dish::find($req->id);//grab data'
+            $old_img = $grab_data->image;
+            
+            if(File::exists(public_path('images/'.$old_img))){
+                File::delete(public_path('images/'.$old_img));
+                /*
+                    Delete Multiple File like this way
+                    Storage::delete(['upload/test.png', 'upload/test2.png']);
+                */
+            }else{
+                return Response()->json([
+                    'status' => 400,
+                    'message' => 'File not exist.',
+                ]);
+            }
+            // end delete file
 
-        if(!is_null($dish->image)){
-            $image_path = $dish->image;
-            // Issue due to storage link, have to change it to public instead of storage
-            $image_path = "public/".explode('/', $image_path)[1];
 
-            //Storage::delete($image_path);
-
-            // This line of code is for production, issue in transfering to public/storage folder
-
-            $old_img_name = explode('/', $image_path)[1];
-            unlink('../public/storage/'.$old_img_name);
+            $Dish = Dish::destroy($req->id);
+            return Response()->json([
+                'status' => 200,
+                'message' => 'Dish Deleted Successfully',
+            ]);
         }
-
-        $dish->delete();
-
-        return redirect()->route('admin.dish.index');
     }
 
 }

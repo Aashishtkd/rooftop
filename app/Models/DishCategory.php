@@ -9,7 +9,7 @@ class DishCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name"];
+    protected $fillable = ["name","image"];
 
     public function dishes(){
         return $this->hasMany(Dish::class);

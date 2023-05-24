@@ -13,20 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dishes', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->float('price');
-            $table->string('image');
-            $table->string('feature');
-            $table->foreignId('dish_category_id')
-                  ->constrained('dish_categories')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+            $table->string('author');
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->integer('addedBy');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dishes');
+        Schema::dropIfExists('testimonials');
     }
 };
