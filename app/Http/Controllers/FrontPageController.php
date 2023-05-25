@@ -7,6 +7,7 @@ use App\Models\Dish;
 use App\Models\DishCategory;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class FrontPageController extends Controller
@@ -21,6 +22,15 @@ class FrontPageController extends Controller
         return view('frontend.menu', compact('categories'));
     }
 
+    public function blog(){
+        $blogs = Blog::all();
+        return view('frontend.blog', compact('blogs'));
+    }
+    public function blogDetails(Request $req){
+        $blogs = Blog::select('*')->limit(4)->get();
+        $blog = Blog::find($req->id);
+        return view('frontend.single_blog', compact('blog','blogs'));
+    }
     public function order(){
         $categories = DishCategory::all();
 

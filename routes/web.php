@@ -27,6 +27,8 @@ Route::prefix('')->group(function(){
                 Route::name('')->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/menu', 'menu')->name('menu');
+                    Route::get('/blog', 'blog')->name('blog');
+                    Route::get('/blogDetails', 'blogDetails')->name('blogDetails');
                     Route::get('/order', 'order')->name('order');
                     Route::post('/single', 'single')->name('single');
                     Route::post('/completeorder', 'completeOrder')->name('completeorder');

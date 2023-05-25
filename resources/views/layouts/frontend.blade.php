@@ -65,6 +65,7 @@
                         <a href="{{route('about')}}" class="nav-item nav-link">About</a>
                         <a href="{{route('order')}}" class="nav-item nav-link">Online Order</a>
                         <a href="{{route('menu')}}" class="nav-item nav-link">Menu</a>
+                        <a href="{{route('blog')}}" class="nav-item nav-link">Blogs</a>
                         <a href="{{route('contact')}}" class="nav-item nav-link">Contact Us</a>
                     </div>
                 </div>
