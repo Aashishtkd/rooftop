@@ -5,11 +5,13 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DishCategoryController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\OtherController;
 use App\Http\Controllers\CkeditorController;
 use App\Http\Controllers\FrontPageController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +20,43 @@ Auth::routes();
 
 // Front Routes
 
+// Route::prefix('')->group(function(){
+//     Route::name('')->group(function(){
+
+//         // Front Routes
+//         Route::prefix('')->group(function () {
+//             Route::controller(FrontPageController::class)->group(function () {
+//                 Route::name('')->group(function () {
+//                     Route::get('/', 'index')->name('index');
+//                     Route::get('/menu', 'menu')->name('menu');
+//                     Route::get('/cart', 'cart')->name('cart');
+//                     Route::get('/blog', 'blog')->name('blog');
+//                     Route::get('/blogDetails', 'blogDetails')->name('blogDetails');
+//                     Route::get('/order', 'order')->name('order');
+//                     Route::post('/single', 'single')->name('single');
+//                     Route::post('/completeorder', 'completeOrder')->name('completeorder');
+//                     Route::get('/contact', 'contact')->name('contact');
+//                     Route::get('/about', 'about')->name('about');
+//                     Route::post('/createcontact', 'createContact')->name('createcontact');
+//                 });
+//             });
+//         });
+
+//     });
+// });
+
 Route::prefix('')->group(function(){
     Route::name('')->group(function(){
 
         // Front Routes
         Route::prefix('')->group(function () {
-            Route::controller(FrontPageController::class)->group(function () {
+            Route::controller(FrontController::class)->group(function () {
                 Route::name('')->group(function () {
                     Route::get('/', 'index')->name('index');
+                    Route::get('/mygallery', 'mygallery')->name('mygallery');
                     Route::get('/menu', 'menu')->name('menu');
+                    Route::get('/book', 'book')->name('book');
+                    Route::get('/cart', 'cart')->name('cart');
                     Route::get('/blog', 'blog')->name('blog');
                     Route::get('/blogDetails', 'blogDetails')->name('blogDetails');
                     Route::get('/order', 'order')->name('order');
@@ -35,10 +65,16 @@ Route::prefix('')->group(function(){
                     Route::get('/contact', 'contact')->name('contact');
                     Route::get('/about', 'about')->name('about');
                     Route::post('/createcontact', 'createContact')->name('createcontact');
+                    Route::post('/createbookings', 'createbookings')->name('createbookings');
+                    Route::post('/addNewCart', 'addNewCart')->name('addNewCart');
+                    Route::get('/bookingsuccess', 'bookingsuccess')->name('bookingsuccess');
+                    Route::get('/contactsuccess', 'contactsuccess')->name('contactsuccess');
+                    Route::post('/decrementCart', 'decrementCart')->name('decrementCart');
+                    Route::post('/incrementCart', 'incrementCart')->name('incrementCart');
+                    Route::post('/deleteCart', 'deleteCart')->name('deleteCart');
                 });
             });
         });
-
     });
 });
 
@@ -141,6 +177,16 @@ Route::prefix('admin')->group(function(){
                     Route::get('/', 'index')->name('index');
                     Route::get('/single/{id}', 'single')->name('single');
                     Route::get('/delete/{id}', 'delete')->name('delete');
+                });
+            });
+        });
+        // Contact Routes
+        Route::prefix('booking')->group(function () {
+            Route::controller(BookingController::class)->group(function () {
+                Route::name('booking.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::get('/changestatus/{id}', 'changestatus')->name('changestatus');
+                    Route::post('booking/destroy', 'destroy')->name('destroy');
                 });
             });
         });

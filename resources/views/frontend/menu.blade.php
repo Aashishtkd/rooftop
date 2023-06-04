@@ -20,8 +20,8 @@
     </div>
 </div>
 
-        <!-- Menu Start -->
-        <div class="container-xxl py-5">
+          <!-- Menu Start -->
+          <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                     <h5 class="section-title ff-secondary text-center text-primary fw-normal">Food Menu</h5>
@@ -43,15 +43,26 @@
                     <div class="tab-content">
                         @for ($i = 0; $i < count($categories); $i++)
                         <div id="tab-{{$i}}" class="tab-pane fade show p-0 @if($i==0) active @endif">
+                            <div class="row mb-4 justify-content-center">
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        <img src="{{ asset('images/'.$categories[$i]->image ) }} " class="w-100"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="row g-4">
                                 @foreach ($categories[$i]->dishes as $dish)
                                 <div class="col-lg-6">
-                                    <div class="d-flex align-items-center">
-                                        <img class="flex-shrink-0 img-fluid rounded" src="{{asset($dish->image)}}" alt="" style="width: 80px;">
-                                        <div class="w-100 d-flex flex-column text-start ps-4">
-                                            <h5 class="d-flex justify-content-between border-bottom pb-2">
+                                    <div class="row border-bottom">
+                                        <div class="col-2">
+                                            <img class="flex-shrink-0 img-fluid rounded" src="{{asset('images/'.$dish->image)}}" alt="" style="width: 40px;">
+                                        </div>
+                                        <div class="col-10">
+                                            <h5 class="d-flex justify-content-between  pb-2">
                                                 <span>{{$dish->name}}</span>
                                                 <span class="text-primary">{{$dish->price}}</span>
+                                                <span class="text-primary"><a onclick="addToCart({{$dish->id}})" class="btn btn-success">+</a></span>
                                             </h5>
                                         </div>
                                     </div>
@@ -61,7 +72,6 @@
                         </div>
                         @endfor
                     </div>
-                </div>
             </div>
         </div>
         <!-- Menu End -->

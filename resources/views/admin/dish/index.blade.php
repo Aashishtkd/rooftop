@@ -15,6 +15,7 @@
             <th scope="col">Image</th>
             <th scope="col">Category</th>
             <th scope="col">Feature</th>
+            <th scope="col">Discount</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -26,12 +27,13 @@
                 <th scope="row"><img src="{{ url('images/'.$dish->image) }}" width="50" height="50"></th>
                 <th scope="row">{{$dish->category->name}}</th>
                 <th scope="row">
-                @if ($dish->feature == "true")
+                  @if ($dish->feature == "true")
                   <span class="badge badge-success">Active</span>
-                @else
-                <span class="badge badge-danger">Inactive</span>
-                @endif
+                  @else
+                  <span class="badge badge-danger">Inactive</span>
+                  @endif
                 </th>
+                <th scope="row">{{$dish->discount}}%</th>
                 <td><a href="{{route('admin.dish.add', ['mode'=>'update','id'=>$dish->id])}}" class="btn btn-sm  btn-success">Edit</a>
                   <button data-id="{{ $dish->id }}" class="btn btn-sm btn-danger btnDelete">Delete</button></td>
             </tr>

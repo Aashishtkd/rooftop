@@ -34,6 +34,22 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
+    @yield('style')
+    <style>
+        .cart_btn{
+            position: relative
+        }
+        .cart_btn .cart_counter{
+            top: 30%;
+            width: 18px;
+            height:18px;
+            padding: 1px 1px 0px 3px;
+            font-size: 12px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: rgb(167, 18, 18);
+        }
+    </style>
 </head>
 
 <body>
@@ -67,6 +83,7 @@
                         <a href="{{route('menu')}}" class="nav-item nav-link">Menu</a>
                         <a href="{{route('blog')}}" class="nav-item nav-link">Blogs</a>
                         <a href="{{route('contact')}}" class="nav-item nav-link">Contact Us</a>
+                        <a href="{{route('cart')}}" class="nav-item nav-link cart_btn"><i class="fas fa-cart-plus"></i><span class="cart_counter">40</span></a>
                     </div>
                 </div>
             </nav>

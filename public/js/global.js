@@ -39,3 +39,6 @@ function deleteFunction(del_id){
         }
       })
 }
+
+
+

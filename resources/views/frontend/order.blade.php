@@ -1,5 +1,11 @@
 @extends('layouts.frontend')
 
+@section('style')
+<style>
+
+</style>
+@endsection
+
 @section('content')
 
 <div class="container-xxl py-5 bg-dark hero-header mb-5">
@@ -72,48 +78,6 @@
                         </div>
                         @endfor
                     </div>
-
-                    <div style="margin-top:50px;"> 
-                        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                            <h4 class="section-title ff-secondary text-center text-primary fw-normal">Cart</h4>
-                        </div>
-                        <div class="row">
-                            @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-                            <div class="col-md-6">
-                                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Your Orders</h5>
-                                <div id="cart-item">
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <h5 class="section-title ff-secondary text-center text-primary fw-normal">Total</h5>
-                                <form action="{{route('completeorder')}}" method="POST">
-                                    @csrf
-                                    <input type="text" class="form-control"  name="name" placeholder="Your Name">
-                                    <input type="text" class="form-control" style="margin-top:20px;" name="location" placeholder="Your Location">
-                                    <input type="text" class="form-control"style="margin-top:20px;" name="phone" placeholder="Your Mobile Number">
-
-                                    <div id="order-form">
-
-                                    </div>
-
-                                    <p id="total"></p>
-
-                                    <input type="submit" class="btn btn-primary" style="margin-top:20px;" value="Order Now">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
         <!-- Menu End -->
@@ -122,49 +86,5 @@
 
 @section('script')
 
-<script>
-
-    let cart = [];
-    let total = 0;
-
-    function addToCart(id){
-        cart.push(id);
-        showCart();
-    }
-
-    function showCart(){
-        $("#cart-item").empty();
-        $("#order-form").empty();
-        total = 0;
-        for(let item of cart){
-
-            // Ajax call
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                method: 'post',
-                url: "{{route('single')}}",
-                data: {"id":item},
-                success: function(data){
-                    total = total + data.price;
-                    let htmlObj = `
-                        <p> `+data.name+` </p>
-                    `;
-                    $('#cart-item').append(htmlObj);
-
-                    $("#total").html('Total: ' + total);
-                    let orderFormObj = `
-                        <input type="hidden" name="order[]" value="`+data.id+`">
-                    `;
-                    $("#order-form").append(orderFormObj);
-                }
-            });
-        }
-    }
-</script>
 
 @endsection

@@ -45,7 +45,8 @@ class DishController extends Controller
                 "price"=>"required|numeric",
                 'image'=>'mimes:jpg,png,jpg|max:5048',
                 "category"=>"required",
-                "feature"=>"required"
+                "feature"=>"required",
+                "discount"=>"required"
             ]);
         }else{
             $request->validate([
@@ -84,6 +85,7 @@ class DishController extends Controller
                 "name"=>$request->get("name"),
                 "price"=>$request->get("price"),
                 "feature"=>$request->get("feature"),
+                "discount"=>$request->get("discount"),
                 "dish_category_id"=>$request->get("category"),
                 'image' => $newImageName,
             ]);
@@ -96,6 +98,7 @@ class DishController extends Controller
                 "name"=>$request->get("name"),
                 "price"=>$request->get("price"),
                 "feature"=>$request->get("feature"),
+                "discount"=>$request->get("discount"),
                 "dish_category_id"=>$request->get("category"),
                 'image' => $newImageName,
             ]);

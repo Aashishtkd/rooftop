@@ -32,6 +32,17 @@
             >
             <small class="text-danger text-sm font-weight-bold" id="price-error"></small>
         </div>
+        <div class="col-12">
+            <label for="discount" class="form-label">Discount (Discount In %)</label>
+            <input type="text" class="form-control" name="discount" id="discount"
+            @if(isset($dish['discount']))
+            value = "{{ $dish['discount'] }}"
+            @else
+            value="0"
+            @endif
+            >
+            <small class="text-danger text-sm font-weight-bold" id="discount-error"></small>
+        </div>
 
         <div class="col-12">
             <label for="category" class="form-label">Category</label>
@@ -92,6 +103,7 @@
         $('#name-error').text('');
           $('#category-error').text('');
           $('#price-error').text('');
+          $('#discount-error').text('');
           $('#feature-error').text('');
           $('#image-error').text('');
         e.preventDefault();
@@ -113,6 +125,7 @@
           $('#category-error').text(response.responseJSON.errors.category);
           $('#feature-error').text(response.responseJSON.errors.category);
           $('#price-error').text(response.responseJSON.errors.price);
+          $('#discount-error').text(response.responseJSON.errors.discount);
           $('#image-error').text(response.responseJSON.errors.image);
         },
           success:function(data){

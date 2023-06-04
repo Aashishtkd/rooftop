@@ -138,6 +138,12 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link collapsed {{ request()->is('admin/booking') ? 'active' : '' }}" href="{{route('admin.booking.index')}}">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span>Booking ({{$booking_remaining}})</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed {{ request()->is('admin/order') ? 'active' : '' }}" href="{{route('admin.order.index')}}">
           <i class="fa-solid fa-cart-shopping"></i>
           <span>Orders ({{$order_remaining}})</span>

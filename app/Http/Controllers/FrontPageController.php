@@ -8,6 +8,7 @@ use App\Models\DishCategory;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Blog;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class FrontPageController extends Controller
@@ -18,7 +19,6 @@ class FrontPageController extends Controller
 
     public function menu(){
         $categories = DishCategory::all();
-
         return view('frontend.menu', compact('categories'));
     }
 
@@ -36,11 +36,13 @@ class FrontPageController extends Controller
 
         return view('frontend.order', compact('categories'));
     }
+    public function cart(){
+        return view('frontend.cart');
+    }
 
     public function single(Request $request){
         return Dish::find($request->get('id'));
     }
-
     public function completeOrder(Request $request){
 
         $request->validate([
