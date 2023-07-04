@@ -9,7 +9,7 @@ class OrderItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["order_id", "dish_id"];
+    protected $fillable = ["dish", "quantity","user_id","amt","order_id"];
 
     public function dish(){
         return $this->belongsTo(Dish::class);

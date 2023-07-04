@@ -12,6 +12,7 @@ class Cart extends Model
         'dish',
         'quantity',
         'device_id',
+        'status',
     ];
     public function dishes(){
         return $this->belongsTo(Dish::class, "dish");

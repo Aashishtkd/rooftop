@@ -49,17 +49,50 @@ class FrontController extends Controller
 
         return view('front.order', compact('categories'));
     }
+    public function checkoutorder(Request $request){
+        $items = null;
+        if ($request->isMethod('post')){
+            $deviseId = $request->deviseId;
+            $total = $request->total;
+            $name = $request->name;
+            $location = $request->location;
+            $phone = $request->phone;
+            // get cart items
+            $items = Cart::with('dishes')->where('device_id',$deviseId)->get();
+        }
+        if(count($items)>0){
+            dd($items);
+            foreach($items as $item){
+                dd($item);
+                $order = Order::create([
+                    "dish"=>$request->get("name"),
+                    "quantity"=>$request->get("phone"),
+                    "amt"=>$total,
+                    "user_id"=>$request->get("location"),
+                    "order_id"=>null,
+                ]);
+            }
+        }else{
+            $categories = DishCategory::with('dishes')->get();
+            return view('front.menu', compact('categories'));
+        }
+        $categories = DishCategory::all();
+
+        return view('front.order', compact('categories'));
+    }
     public function cart(Request $request){
         $deviseId = $request->session()->get('device_id');
+        $totalSum = 0;
         if(isset($deviseId)){
             $items = Cart::with('dishes')->where('device_id',$deviseId)->get();
             $totalSum = DB::table('carts')
+                            ->where('device_id',$deviseId)
                             ->join('dishes', 'carts.dish', '=', 'dishes.id')
                             ->sum(DB::raw('dishes.price * carts.quantity'));
         }else{
             $items = null;
         }
-        return view('front.cart',compact('items','totalSum'));
+        return view('front.cart',compact('items','totalSum','deviseId'));
     }
 
     public function incrementCart(Request $request){

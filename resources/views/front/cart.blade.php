@@ -41,9 +41,7 @@
                                                   <button class="btn btn-sm btn-light px-2 qtyChangeBtn" data-id ="{{ $item->id }}"  data-route="{{ route('decrementCart') }}">
                                                     <i class="fa fa-minus"></i>
                                                   </button>
-                                            
                                                   <input min="0" name="quantity" value="{{ $item->quantity }}" type="number" class="custom-input" style="padding: 0 5px; width: 30px;">
-                                            
                                                   <button class="btn btn-sm btn-light px-2 qtyChangeBtn" data-id ="{{ $item->id }}"  data-route="{{ route('incrementCart') }}" >
                                                     <i class="fa fa-plus"></i>
                                                   </button>
@@ -54,31 +52,37 @@
                                           @endforeach
                                         @endisset
                                     </table>
-                                    <a href="{{route('menu')}}" class="btn btn-sm btn-warning">Order Another Item <i class="fa fa-shopping-cart"></i></a>
+                                    <a href="{{route('menu')}}" class="btn btn-sm btn-warning">Order Another Item <i class="fa fa-shopping-cart"></i></a><br>
+                                   <div class="row">
+                                    <span class="alert alert-danger w-100 text-danger m-4">For Delivery you need to order minimum Rs 500</span>
+                                   </div>
                                 </div>
-                            </div>
+                              </div>
                             <div class="col-md-4">
                                 <div class="w-100 shadow-sm p- bg-light">
                                     <div class="bg-secondary p-3  mb-3 text-white rounded" style="text-align: left">
+                                      @if ($totalSum < 500)
+                                        <div class="alert alert-danger text-center m-0">#Checkout process will be proceed for morethan Rs 500 order</div><br>
+                                      @endif
                                         <span class="text-left">Delivery Charge : Rs 0</span><br>
                                         <span>Tax : 0%</span><br>
                                         <hr>
                                         <h4 class="text-white">Total : Rs {{ $totalSum }}</h4>
                                     </div>
                                     <h6 class="text-secondary">Insert Your Detail To Confirm Your Order</h6>
-                                    <form action="{{route('completeorder')}}" class="p-3" method="POST">
+                                    <form action="{{route('checkoutorder')}}" class="p-3 " method="POST">
                                         @csrf
-                                        <input type="text" class="form-control"  name="name" placeholder="Your Name">
-                                        <input type="text" class="form-control" style="margin-top:20px;" name="location" placeholder="Your Location">
-                                        <input type="text" class="form-control"style="margin-top:20px;" name="phone" placeholder="Your Mobile Number">
-    
-                                        <div id="order-form">
-    
-                                        </div>
-    
-                                        <p id="total"></p>
-    
-                                        <input type="submit" class="btn btn-warning" style="margin-top:20px;" value="Order Now">
+                                        <input type="hidden" class="form-control"  name="deviseId" value="{{ $deviseId }}">
+                                        <input type="hidden" class="form-control"  name="total" value="{{ $totalSum }}">
+                                        <input type="text" class="form-control"  name="name" required placeholder="Your Name">
+                                        <span class="text-danger text-sm text-left" id="name-error"></span>
+                                        <input type="text" class="form-control" style="margin-top:20px;" name="location" required placeholder="Your Location">
+                                        <span class="text-danger text-sm text-left" id="location-error"></span>
+                                        <input type="text" class="form-control"style="margin-top:20px;" name="phone" required placeholder="Your Mobile Number">
+                                        <span class="text-danger text-sm text-left" id="phone-error"></span>
+                                        <br>
+                                        <input type="submit" class="btn btn-warning" @if ($totalSum < 500) disabled @endif style="margin-top:20px;" value="Order Now">
+                                        
                                     </form>
                                 </div>
                             </div>

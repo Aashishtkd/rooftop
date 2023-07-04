@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')
-                  ->constrained('orders')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->foreignId('dish_id')
-                  ->constrained('dishes')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+            $table->string('dish')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->string('user_id')->nullable(false);
+            $table->string('amt')->nullable(false);
+            $table->string('order_id')->nullable();
             $table->timestamps();
         });
     }

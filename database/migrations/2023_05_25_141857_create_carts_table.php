@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('dish')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('device_id')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

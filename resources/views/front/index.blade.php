@@ -10,9 +10,9 @@
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="{{route('index')}}">
             <span>
-              Feane
+              RoofTop
             </span>
           </a>
 
@@ -250,7 +250,7 @@
             <div class="detail-box">
               <div class="heading_container">
                 <h2>
-                  We Are Feane
+                  We Are RoofTop
                 </h2>
               </div>
               <p>

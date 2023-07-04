@@ -61,6 +61,7 @@ Route::prefix('')->group(function(){
                     Route::get('/blogDetails', 'blogDetails')->name('blogDetails');
                     Route::get('/order', 'order')->name('order');
                     Route::post('/single', 'single')->name('single');
+                    Route::post('/checkoutorder', 'checkoutorder')->name('checkoutorder');
                     Route::post('/completeorder', 'completeOrder')->name('completeorder');
                     Route::get('/contact', 'contact')->name('contact');
                     Route::get('/about', 'about')->name('about');
