@@ -23,6 +23,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
   <!-- nice select  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
   <!-- font awesome style -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
   {{-- toster --}}
@@ -58,24 +59,39 @@
               Contact Us
             </h4>
             <div class="contact_link_box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                  Location
-                </span>
-              </a>
-              <a href="">
+             
+              @if(isset($settings->address))
+                <a href="">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <span>
+                    {{ $settings->address }}
+                  </span>
+                </a>
+              @endif
+              @if(isset($settings->mobile))
+                <a href="">
+                  <i class="fas fa-mobile"></i>
+                  <span>
+                    {{ $settings->mobile }}
+                  </span>
+                </a>
+              @endif
+              @if(isset($settings->phone))
+                <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>
-                  Call +01 1234567890
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span>
-                  demo@gmail.com
-                </span>
-              </a>
+                  <span>
+                    {{ $settings->phone }}
+                  </span>
+                </a>
+              @endif
+              @if(isset($settings->email))
+                <a href="">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <span>
+                    {{ $settings->email }}
+                  </span>
+                </a>
+              @endif
             </div>
           </div>
         </div>
@@ -83,26 +99,35 @@
           <div class="footer_detail">
             <a href="" class="footer-logo">
               RoofTop
+              
             </a>
-            <p>
-              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
-            </p>
+            {{ $settings->aboutus }}
             <div class="footer_social">
-              <a href="">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-pinterest" aria-hidden="true"></i>
-              </a>
+                @if(isset($settings->twitter))
+                <a href="{{ $settings->twitter }}">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                @endif
+                @if(isset($settings->youtube))
+                <a href="{{ $settings->youtube }}">
+                  <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                </a>
+                @endif
+                @if(isset($settings->tiktok))
+                <a href="{{ $settings->tiktok }}">
+                  <i class="fab fa-tiktok" style="color"></i>
+                </a>
+                @endif
+                @if(isset($settings->insta))
+                <a href="{{ $settings->insta }}">
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+                @endif
+                @if(isset($settings->facebook))
+                <a href="{{ $settings->facebook }}">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                @endif
             </div>
           </div>
         </div>
@@ -114,16 +139,16 @@
             Everyday
           </p>
           <p>
-            10.00 Am -10.00 Pm
+            24/7
           </p>
         </div>
       </div>
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a><br><br>
-          &copy; <span id="displayYear"></span> Distributed By
-          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+          <a href="">RoofTop Restro</a><br><br>
+          &copy; <span id="displayYear"></span> Developed By
+          <a href="http://cupsandcode.com/" target="_blank">Cups&Code</a>
         </p>
       </div>
     </div>

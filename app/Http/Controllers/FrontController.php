@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Contact;
 use App\Models\Booking;
 use App\Models\Dish;
@@ -49,6 +50,9 @@ class FrontController extends Controller
 
         return view('front.order', compact('categories'));
     }
+    public function getcheckoutorder(Request $request){
+        return redirect()->route('cart');
+    }
     public function checkoutorder(Request $request){
         $items = null;
         if ($request->isMethod('post')){
@@ -60,25 +64,54 @@ class FrontController extends Controller
             // get cart items
             $items = Cart::with('dishes')->where('device_id',$deviseId)->get();
         }
+        // check old data exist or not
+        $old_order = OrderItem::where("user_id",$deviseId)->where("order_id",null)->get();
+       
         if(count($items)>0){
-            dd($items);
-            foreach($items as $item){
-                dd($item);
-                $order = Order::create([
-                    "dish"=>$request->get("name"),
-                    "quantity"=>$request->get("phone"),
-                    "amt"=>$total,
-                    "user_id"=>$request->get("location"),
-                    "order_id"=>null,
-                ]);
+            if(count($old_order) != count($items)){
+                $dataDelete = OrderItem::where("user_id",$deviseId)->where("order_id",null)->delete();
+                foreach($items as $item){
+                    $dish = Dish::find($item->dish);
+                    $amt = $dish->price - $dish->discount;
+                    $order = OrderItem::insert([
+                        "dish"=>$dish->id,
+                        "quantity"=>$item->quantity,
+                        "amt"=>$amt,
+                        "user_id"=>$deviseId,
+                        "order_id"=>null,
+                    ]);
+                }
             }
         }else{
             $categories = DishCategory::with('dishes')->get();
             return view('front.menu', compact('categories'));
         }
-        $categories = DishCategory::all();
-
-        return view('front.order', compact('categories'));
+        $orderSum = OrderItem::with("dishs")->where("user_id", $deviseId)->where("order_id",null)->sum('amt');
+        $orgeritem = OrderItem::with("dishs")->where("user_id", $deviseId)->where("order_id",null)->get();
+        return view('front.order', compact('orgeritem','orderSum','location','name','phone'));
+    }
+    public function confirmorder(Request $request){
+        $deviceId = $request->deviceId;
+        $name = $request->name;
+        $location = $request->location;
+        $phone = $request->phone;
+        $orderID = Order::insertGetId([
+            "name"=>$name,
+            "location"=>$location,
+            "phone"=>$phone,
+            "status"=>"pending",
+            "created_at"=>Carbon::now(),
+        ]);
+        if(isset($orderID)){
+            $old_order = OrderItem::where("user_id",$deviceId)->get();
+            $delete_cart = Cart::where("device_id",$deviceId)->delete();
+            foreach($old_order as $item){
+                $order = OrderItem::where("id", $item->id)->update([
+                    "order_id"=>$orderID,
+                ]);
+            }
+            return redirect()->route('ordersuccess');
+        }
     }
     public function cart(Request $request){
         $deviseId = $request->session()->get('device_id');
@@ -206,6 +239,9 @@ class FrontController extends Controller
     }
     public function bookingsuccess(){
         return view('front.bookingsuccess');
+    }
+    public function ordersuccess(){
+        return view('front.ordersuccess');
     }
     public function contactsuccess(){
         return view('front.contactsuccess');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\OrderItem;
 
 class OrderController extends Controller
 {
@@ -19,9 +20,10 @@ class OrderController extends Controller
     }
 
     public function single($id){
-        $order = Order::find($id);
+        $order = Order::with('listitem')->find($id);
+        $orderitems = OrderItem::with('dishs')->where('order_id',$id)->get();
 
-        return view('admin.order.single', compact('order'));
+        return view('admin.order.single', compact('order','orderitems'));
     }
 
     public function complete($id){

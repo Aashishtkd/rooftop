@@ -11,7 +11,7 @@ class OrderItem extends Model
 
     protected $fillable = ["dish", "quantity","user_id","amt","order_id"];
 
-    public function dish(){
-        return $this->belongsTo(Dish::class);
+    public function dishs(){
+        return $this->belongsTo(Dish::class, 'dish', 'id');
     }
 }

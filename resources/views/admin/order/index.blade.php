@@ -12,7 +12,7 @@
             <th scope="col">Name</th>
             <th scope="col">Location</th>
             <th scope="col">Phone</th>
-            <th scope="col">Created At</th>
+            <th scope="col">Ordered Date</th>
             <th scope="col">Completed</th>
             <th scope="col">View</th>
             <th scope="col">Delete</th>
@@ -25,7 +25,7 @@
                 <th scope="row">{{$order->location}}</th>
                 <th scope="row">{{$order->phone}}</th>
                 <th scope="row">{{$order->created_at}}</th>
-                <th scope="row">@if($order->completed) Yes @else No @endif</th>
+                <th scope="row">@if($order->completed) <span class="badge bg-success">Yes</span> @else <span class="badge bg-danger">No</span> @endif</th>
                 <td><a href="{{route('admin.order.single', $order->id)}}" class="btn btn-sm  btn-warning">View</a></td>
                 <td><a href="{{route('admin.order.delete', $order->id)}}" class="btn btn-sm  btn-danger">Delete</a></td>
             </tr>

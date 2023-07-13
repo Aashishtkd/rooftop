@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("phone");
             $table->string("location");
+            $table->string("status");
             $table->boolean("completed")->default(false);
             $table->timestamps();
         });

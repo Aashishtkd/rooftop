@@ -139,7 +139,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed {{ request()->is('admin/booking') ? 'active' : '' }}" href="{{route('admin.booking.index')}}">
-          <i class="fa-solid fa-cart-shopping"></i>
+          <i class="fas fa-chair"></i>
           <span>Booking ({{$booking_remaining}})</span>
         </a>
       </li>

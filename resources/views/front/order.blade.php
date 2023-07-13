@@ -28,20 +28,31 @@
                                     <tr class="bg-warning text-white">
                                         <td>Product name</td>
                                         <td>Quantity</td>
+                                        <td>Price</td>
                                         <td>Total</td>
                                     </tr>
+                                    @foreach ($orgeritem as $item)
                                     <tr>
-                                        <td>Food Name</td>
-                                        <td>20</td>\
-                                        <td>Rs. 500</td>
+                                        <td>{{ $item->dishs->name }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->amt }}</td>
+                                        <td>{{ $item->quantity*$item->amt }}</td>
                                     </tr>
+                                    @endforeach
                                 </table>
                             </div>
                             <div>
-                                <h2>Total : Rs. 3000</h2>
+                                <h2>Total : Rs. {{ $orderSum }}</h2>
                             </div>
                             <div class="my-3">
-                                <a href="" class="btn btn-danger">Confirm Order</a>
+                                <form action="{{route('confirmorder')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="deviceId" value="{{ $orgeritem[0]->user_id }}">
+                                    <input type="hidden" name="name" value="{{ $name }}">
+                                    <input type="hidden" name="location" value="{{ $location }}">
+                                    <input type="hidden" name="phone" value="{{ $phone }}">
+                                    <input type="submit" class="btn btn-danger" value="Confirm Order">
+                                </form>
                             </div>
                         </div>
                         <div class="col-md-4">

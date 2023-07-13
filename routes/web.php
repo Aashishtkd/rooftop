@@ -62,6 +62,8 @@ Route::prefix('')->group(function(){
                     Route::get('/order', 'order')->name('order');
                     Route::post('/single', 'single')->name('single');
                     Route::post('/checkoutorder', 'checkoutorder')->name('checkoutorder');
+                    Route::get('/checkoutorder', 'getcheckoutorder')->name('getcheckoutorder');
+                    Route::post('/confirmorder', 'confirmorder')->name('confirmorder');
                     Route::post('/completeorder', 'completeOrder')->name('completeorder');
                     Route::get('/contact', 'contact')->name('contact');
                     Route::get('/about', 'about')->name('about');
@@ -69,6 +71,7 @@ Route::prefix('')->group(function(){
                     Route::post('/createbookings', 'createbookings')->name('createbookings');
                     Route::post('/addNewCart', 'addNewCart')->name('addNewCart');
                     Route::get('/bookingsuccess', 'bookingsuccess')->name('bookingsuccess');
+                    Route::get('/ordersuccess', 'ordersuccess')->name('ordersuccess');
                     Route::get('/contactsuccess', 'contactsuccess')->name('contactsuccess');
                     Route::post('/decrementCart', 'decrementCart')->name('decrementCart');
                     Route::post('/incrementCart', 'incrementCart')->name('incrementCart');
