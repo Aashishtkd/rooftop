@@ -4,7 +4,7 @@
 <body>
 <div class="hero_area">
     <div class="bg-box">
-      <img src="{{ asset('front/images/hero-bg.jpg') }}" alt="">
+      <img src="{{ asset('front/images/final1.jpg') }}" alt="">
     </div>
     <!-- header section strats -->
     <header class="header_section">
@@ -243,7 +243,7 @@
         <div class="row">
           <div class="col-md-6 ">
             <div class="img-box">
-              <img src=" {{ asset('front/images/about-img.png') }}" alt="">
+              <img src=" {{ asset('front/images/image3.jpg') }}" alt="">
             </div>
           </div>
           <div class="col-md-6">
@@ -254,10 +254,7 @@
                 </h2>
               </div>
               <p>
-                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-                in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-                are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-                the middle of text. All
+              We provide local and typical dishes as well as trending dishes in a reasonable price with warm hospitality and beutiful sight seeing of bungy and swing. We had a good location and loyal following.
               </p>
               <a href="">
                 Read More
