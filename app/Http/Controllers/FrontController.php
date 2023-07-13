@@ -13,6 +13,8 @@ use App\Models\Gallery;
 use App\Models\OrderItem;
 use App\Models\Blog;
 use App\Models\Cart;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Setting;
 use DB;
 use Illuminate\Http\Request;
 
@@ -110,6 +112,21 @@ class FrontController extends Controller
                     "order_id"=>$orderID,
                 ]);
             }
+            // send mail
+            $settings = Setting::first(); 
+            $user['to'] =  $settings->email ;
+            $data = [
+                'name' => $name,
+                'phone' => $phone,
+                "status"=>"pending",
+                "location"=>$location,
+                'subject' => 'ROOF-TOP Order Mail.',
+                'body' => "Please check order i have placed an order.",
+            ];
+            Mail::send('front.ordermail',array('data' => $data),function($messages) use ($user){
+                $messages->to($user['to']);
+                $messages->subject('ROOF-TOP Order Mail.');
+            });
             return redirect()->route('ordersuccess');
         }
     }
@@ -211,6 +228,19 @@ class FrontController extends Controller
             "message"=>$request->get("message"),
             "seen"=>false
         ]);
+        $settings = Setting::first(); 
+        $user['to'] =  $settings->email ;
+        $data = [
+            'name' => $request->get("name"),
+            'phone' => $request->get("phone"),
+            'subject' => 'ROOF-TOP Contact Mail.',
+            'body' => $request->get("message"),
+        ];
+        Mail::send('front.bookingmail',array('data' => $data),function($messages) use ($user){
+            $messages->to($user['to']);
+            $messages->subject('ROOF-TOP Contact Mail.');
+        });
+
 
         return view('front.contactsuccess', compact("contact"));
     }
@@ -231,6 +261,22 @@ class FrontController extends Controller
             "completed"=>"false",
             "time"=>$request->get("time"),
         ]);
+        // send mail
+        $settings = Setting::first(); 
+        $user['to'] =  $settings->email ;
+        $data = [
+            "name"=>$request->get("name"),
+            "phone"=>$request->get("phone"),
+            "person"=>$request->get("person"),
+            "date"=>$request->get("date"),
+            "time"=>$request->get("time"),
+            'subject' => 'ROOF-TOP Table Booking Mail.',
+            'body' => "I have Booked a table please check.",
+        ];
+        Mail::send('front.tablebookingmail',array('data' => $data),function($messages) use ($user){
+            $messages->to($user['to']);
+            $messages->subject('ROOF-TOP Table Booking Mail.');
+        });
         return redirect()->route('bookingsuccess');
     }
     
