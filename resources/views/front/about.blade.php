@@ -17,7 +17,7 @@
           <div class="detail-box">
             <div class="heading_container">
               <h2>
-                We Are RoofTop
+                Why RoofTop
               </h2>
             </div>
             <p>

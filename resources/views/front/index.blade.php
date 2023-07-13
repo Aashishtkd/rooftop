@@ -67,10 +67,10 @@
                   <div class="col-md-7 col-lg-6 ">
                     <div class="detail-box">
                       <h1>
-                        Fast Food Restaurant
+                        Roof-Top Restaurant
                       </h1>
                       <p>
-                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Roof-Top Restaurant is a family-owned and operated restaurant that has been serving various local and trending dishes for over 5 years. It is located in Kushma Parbat and offers stunning views of the bungy and swing.
                       </p>
                       <div class="btn-box">
                         <a href="{{route('menu')}}" class="btn1">
@@ -88,10 +88,10 @@
                   <div class="col-md-7 col-lg-6 ">
                     <div class="detail-box">
                       <h1>
-                        Fast Food Restaurant
+                        The Traveler's Hub
                       </h1>
                       <p>
-                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Roof-Top Restaurant is a popular spot for travelers and locals alike in Kushma. The restaurant offers a wide variety of Continental, Chinese, Indian and international dishes, all of which are made with fresh, high-quality ingredients.
                       </p>
                       <div class="btn-box">
                         <a href="{{route('menu')}}" class="btn1">
@@ -109,10 +109,10 @@
                   <div class="col-md-7 col-lg-6 ">
                     <div class="detail-box">
                       <h1>
-                        Fast Food Restaurant
+                        Roof-Top Restaurant
                       </h1>
                       <p>
-                        Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Roof-Top Restaurant is a family-owned and operated restaurant that has been serving various local and trending dishes for over 5 years. It is located in Kushma Parbat and offers stunning views of the bungy and swing.
                       </p>
                       <div class="btn-box">
                         <a href="{{route('menu')}}" class="btn1">
@@ -250,7 +250,7 @@
             <div class="detail-box">
               <div class="heading_container">
                 <h2>
-                  We Are RoofTop
+                  Why RoofTop
                 </h2>
               </div>
               <p>
