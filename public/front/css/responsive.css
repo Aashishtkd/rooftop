@@ -95,3 +95,9 @@ padding-left: 0;
     width: 50%;
   }
 }
+
+.price_cut {
+  color: gray;
+  font-size: 12px;
+  text-decoration: line-through;
+}

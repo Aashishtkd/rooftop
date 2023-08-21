@@ -66,12 +66,11 @@ class FrontController extends Controller
             // get cart items
             $items = Cart::with('dishes')->where('device_id',$deviseId)->get();
         }
-        // check old data exist or not
-        $old_order = OrderItem::where("user_id",$deviseId)->where("order_id",null)->get();
-       
-        if(count($items)>0){
-            if(count($old_order) != count($items)){
-                $dataDelete = OrderItem::where("user_id",$deviseId)->where("order_id",null)->delete();
+        if($items!=null){
+            // check old data exist or not
+            $old_order = OrderItem::where("user_id",$deviseId)->where("order_id",null)->get();
+            if(isset($old_order)){
+                $old_order = OrderItem::where("user_id",$deviseId)->where("order_id",null)->delete();
                 foreach($items as $item){
                     $dish = Dish::find($item->dish);
                     $amt = $dish->price - $dish->discount;

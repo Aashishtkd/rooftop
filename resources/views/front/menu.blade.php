@@ -35,7 +35,7 @@
                     </h5>
                     <div class="options">
                       <h6>
-                        Rs. {{ $dish->price }}
+                        Rs. {{ $dish->price }} <span class="price_cut">Rs. {{ round(($dish->price+(($dish->price*$dish->discount)/100)),2) }}</span>
                       </h6>
                       <a class="cart_link text-white addCartBtn " data-route="{{ route('addNewCart') }}" data-id="{{ $dish->id }}" href="#">
                         <i class="fa fa-shopping-cart"></i>

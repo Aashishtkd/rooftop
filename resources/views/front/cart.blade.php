@@ -54,15 +54,15 @@
                                     </table>
                                     <a href="{{route('menu')}}" class="btn btn-sm btn-warning">Order Another Item <i class="fa fa-shopping-cart"></i></a><br>
                                    <div class="row">
-                                    <span class="alert alert-danger w-100 text-danger m-4">For Delivery you need to order minimum Rs 500</span>
+                                    <span class="alert alert-danger w-100 text-danger m-4">For Delivery you need to order minimum Rs 200</span>
                                    </div>
                                 </div>
                               </div>
                             <div class="col-md-4">
                                 <div class="w-100 shadow-sm p- bg-light">
                                     <div class="bg-secondary p-3  mb-3 text-white rounded" style="text-align: left">
-                                      @if ($totalSum < 500)
-                                        <div class="alert alert-danger text-center m-0">#Checkout process will be proceed for morethan Rs 500 order</div><br>
+                                      @if ($totalSum < 200)
+                                        <div class="alert alert-danger text-center m-0">#Checkout process will be proceed for morethan Rs 200 order</div><br>
                                       @endif
                                         <span class="text-left">Delivery Charge : Rs 0</span><br>
                                         <span>Tax : 0%</span><br>
@@ -81,7 +81,7 @@
                                         <input type="text" class="form-control"style="margin-top:20px;" name="phone" required placeholder="Your Mobile Number">
                                         <span class="text-danger text-sm text-left" id="phone-error"></span>
                                         <br>
-                                        <input type="submit" class="btn btn-warning" @if ($totalSum < 500) disabled @endif style="margin-top:20px;" value="Order Now">
+                                        <input type="submit" class="btn btn-warning" @if ($totalSum < 200) disabled @endif style="margin-top:20px;" value="Order Now">
                                         
                                     </form>
                                 </div>
