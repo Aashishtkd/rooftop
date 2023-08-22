@@ -35,11 +35,14 @@ class OrderController extends Controller
         return redirect()->route('admin.order.index');
     }
 
-    public function delete($id){
-        $order = Order::find($id);
-
-        $order->delete();
-
-        return redirect()->route('admin.order.index');
+    public function delete(Request $req){
+        if($req->ajax()){
+            $booking = Order::find($req->id);
+            $booking->delete();
+            return Response()->json([
+                'status' => 200,
+                'message' => 'File Deleted Successfully',
+            ]);
+        }
     }
 }

@@ -169,7 +169,7 @@ Route::prefix('admin')->group(function(){
                     Route::get('/', 'index')->name('index');
                     Route::get('/single/{id}', 'single')->name('single');
                     Route::get('/complete/{id}', 'complete')->name('complete');
-                    Route::get('/delete/{id}', 'delete')->name('delete');
+                    Route::post('/delete/', 'delete')->name('delete');
                 });
             });
         });

@@ -73,7 +73,7 @@ class FrontController extends Controller
                 $old_order = OrderItem::where("user_id",$deviseId)->where("order_id",null)->delete();
                 foreach($items as $item){
                     $dish = Dish::find($item->dish);
-                    $amt = $dish->price - $dish->discount;
+                    $amt = $dish->price;
                     $order = OrderItem::insert([
                         "dish"=>$dish->id,
                         "quantity"=>$item->quantity,
