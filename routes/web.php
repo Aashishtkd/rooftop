@@ -180,7 +180,7 @@ Route::prefix('admin')->group(function(){
                 Route::name('contact.')->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::get('/single/{id}', 'single')->name('single');
-                    Route::get('/delete/{id}', 'delete')->name('delete');
+                    Route::post('/delete/', 'delete')->name('delete');
                 });
             });
         });

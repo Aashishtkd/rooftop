@@ -42,7 +42,9 @@
         </div>
         <div class="col-md-6">
           <div class="map_container ">
-            <div id="googleMap"></div>
+            @if(isset($settings->map))
+                    {!! $settings->map !!}
+              @endif
           </div>
         </div>
       </div>

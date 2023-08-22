@@ -64,7 +64,7 @@
                 dataType: "json",
                 success : function(data){
                     if(data.status ==200){
-                          window.location.href = "{{ route('admin.booking.index') }}"
+                          window.location.href = "{{ route('admin.order.index') }}"
                     }else{
                       $('.yajra-datatables').DataTable().ajax.reload();
                       Swal.fire({

@@ -26,12 +26,15 @@ class ContactController extends Controller
 
         return view('admin.contact.single', compact('contact'));
     }
-
-    public function delete($id){
-        $contact = Contact::find($id);
-        $contact->delete();
-
-        return redirect()->route('admin.contact.index');
+    public function delete(Request $req){
+        if($req->ajax()){
+            $booking = Contact::find($req->id);
+            $booking->delete();
+            return Response()->json([
+                'status' => 200,
+                'message' => 'File Deleted Successfully',
+            ]);
+        }
     }
 
 }
